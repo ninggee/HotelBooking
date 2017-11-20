@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
+import controllers.ReservationController;
 import controllers.UserController;
 import models.Model;
 import models.UserModel;
@@ -35,6 +36,10 @@ public class Main {
         //add a normal user
         post("/user", UserController::addUser);
 
+        path("/reservation", () -> {
+            get("/", ReservationController::queryReservations);
+            get("/:id", ReservationController::queryReservation);
+        });
 
     }
 }
