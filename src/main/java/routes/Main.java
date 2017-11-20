@@ -38,10 +38,10 @@ public class Main {
         post("/user", UserController::addUser);
 
         path("/reservation", () -> {
-            get("/", ReservationController::queryReservations);
+            get("", ReservationController::queryReservations);
             get("/:id", ReservationController::queryReservation);
             delete("/delete/:id", ReservationController::deleteReservation);
-            post("/insert", ReservationController::insertReservation);
+            post("/insert", ReservationController::addReservation);
             put("/update", ReservationController::updateReservation);
         });
 

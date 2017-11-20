@@ -28,15 +28,12 @@ public class ReservationController {
         }
     }
 
-    public static String deleteReservation(Request request, Response response) {
-        return null;
-    }
-
-    public static String insertReservation(Request request, Response response) {
+    public static String addReservation(Request request, Response response) {
         int roomId;
         int userId;
         Date startDate = null;
         Date endDate = null;
+
         try {
             roomId = Integer.parseInt(request.queryParams("room_id"));
             userId = Integer.parseInt(request.queryParams("user_id"));
@@ -46,17 +43,18 @@ public class ReservationController {
             ReservationModel reservationModel = new ReservationModel(roomId, userId, startDate, endDate);
             reservationDao.create(reservationModel);
             return "true";
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return "false";
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "false";
         }
     }
 
+    public static String deleteReservation(Request request, Response response) {
+        return "delete " + request.params(":id");
+    }
+
     public static String updateReservation(Request request, Response response) {
-        return null;
+        return "update";
     }
 
     public static String queryReservations(Request request, Response response) {
