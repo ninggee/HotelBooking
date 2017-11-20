@@ -48,7 +48,10 @@ public class Main {
 
         path("/room", () -> {
             get("/", RoomsController::queryAll);
-//            get("/:id", ReservationController::queryReservation);
+            get("/:id", RoomsController::queryById);
+            post("/add", RoomsController::addRoom);
+            delete("/delete/:id", RoomsController::deleteById);
+            put("/update/:id", RoomsController::updateById);
         });
 
         // Using Route
