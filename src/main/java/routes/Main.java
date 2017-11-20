@@ -24,7 +24,16 @@ public class Main {
         Dao<UserModel,String> userDao = DaoManager.createDao(Model.connectionSource, UserModel.class);
 
 
-        get("/", UserController::addUser);
+        //home page
+        get("/", (req, res) -> {
+            res.status(200);
+            res.body("welcome to hotel booking backend");
+
+           return res.body();
+        });
+
+        //add a normal user
+        post("/user", UserController::addUser);
 
 
     }
