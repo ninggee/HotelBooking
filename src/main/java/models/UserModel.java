@@ -37,6 +37,12 @@ public class UserModel  extends Model{
         // all persisted classes must define a no-arg constructor with at least package visibility
     }
 
+    public UserModel(String name, String password, boolean is_admin) {
+        this.name = name;
+        this.password = password;
+        this.is_admin = is_admin;
+    }
+
     public UserModel(String name) {
         this.name = name;
     }

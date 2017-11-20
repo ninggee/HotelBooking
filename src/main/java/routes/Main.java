@@ -40,6 +40,9 @@ public class Main {
         path("/reservation", () -> {
             get("/", ReservationController::queryReservations);
             get("/:id", ReservationController::queryReservation);
+            delete("/delete/:id", ReservationController::deleteReservation);
+            post("/insert", ReservationController::insertReservation);
+            put("/update", ReservationController::updateReservation);
         });
 
         path("/room", () -> {

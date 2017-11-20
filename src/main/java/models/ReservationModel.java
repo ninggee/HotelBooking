@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 @DatabaseTable(tableName = "orders")
-public class OrderModel extends Model{
+public class ReservationModel extends Model{
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField(columnName = "room_id")
@@ -21,6 +21,16 @@ public class OrderModel extends Model{
 
     @DatabaseField(columnName = "end_date")
     private Date end_date;
+
+    public ReservationModel() {
+    }
+
+    public ReservationModel(int room_id, int user_id, Date start_date, Date end_date) {
+        this.room_id = room_id;
+        this.user_id = user_id;
+        this.start_date = start_date;
+        this.end_date = end_date;
+    }
 
     public int getId() {
         return id;
