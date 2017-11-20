@@ -2,6 +2,10 @@ group 'HotelBooking'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName 'routes.Main'
+
 
 sourceCompatibility = 1.8
 
@@ -16,3 +20,4 @@ dependencies {
     compile files('./lib/ormlite-core-5.0.jar')
     compile 'mysql:mysql-connector-java:5.1.34'
 }
+
