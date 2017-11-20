@@ -26,6 +26,14 @@ public class RoomModel extends Model {
     public RoomModel() {
     }
 
+    public RoomModel(int room_number, String room_type, int price, String description, boolean is_ordered) {
+        this.room_number = room_number;
+        this.room_type = room_type;
+        this.price = price;
+        this.description = description;
+        this.is_ordered = is_ordered;
+    }
+
     public int getId() {
         return id;
     }
