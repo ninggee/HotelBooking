@@ -1,5 +1,6 @@
 package routes;
 
+import Utils.Utils;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -34,9 +35,21 @@ public class Main {
            return res.body();
         });
 
-        //add a normal user
-        post("/user", UserController::addUser);
-        post("/login", UserController::login);
+        path("/user", () -> {
+            //add a normal user
+            post("/normal", UserController::addUser);
+
+            //add an admin user
+            post("/admin", UserController::addAdmin);
+
+            post("/login", UserController::login);
+
+            post("/logout", UserController::logout);
+
+            //修改用户名和密码
+            post("/password", UserController::changePassword);
+        });
+
 
         path("/reservation", () -> {
             get("/", ReservationController::queryReservations);

@@ -1,7 +1,9 @@
 package Utils;
 
 import com.google.gson.Gson;
+import models.UserModel;
 import org.mindrot.jbcrypt.BCrypt;
+import spark.Request;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,5 +27,35 @@ public class Utils {
         tmp.put("result", result);
 
         return gson.toJson(tmp);
+    }
+
+    public static int checkAuth(Request request) {
+        boolean is_login = request.session().attribute("is_login");
+
+        if(is_login) {
+            UserModel user = (UserModel) request.session().attribute("user");
+
+            if(user.isIs_admin()) {
+                return 2; //admin user
+            } else {
+                return 1; //normal user
+            }
+
+        } else {
+            return  0; //user is not login
+        }
+    }
+
+    public static UserModel getLoginUser(Request request) {
+        boolean is_login = request.session().attribute("is_login");
+
+        if(is_login) {
+            UserModel user = (UserModel) request.session().attribute("user");
+
+           return user;
+
+        } else {
+            return  null; //user is not login
+        }
     }
 }
