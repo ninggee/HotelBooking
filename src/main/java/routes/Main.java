@@ -36,6 +36,7 @@ public class Main {
 
         //add a normal user
         post("/user", UserController::addUser);
+        post("/login", UserController::login);
 
         path("/reservation", () -> {
             get("/", ReservationController::queryReservations);
@@ -49,5 +50,17 @@ public class Main {
             get("/", RoomsController::queryAll);
 //            get("/:id", ReservationController::queryReservation);
         });
+
+        // Using Route
+        notFound((req, res) -> {
+            res.type("application/json");
+            return "{\"message\":\"Custom 404\"}";
+        });
+        // Using Route
+        internalServerError((req, res) -> {
+            res.type("application/json");
+            return "{\"message\":\"Custom 500 handling\"}";
+        });
+
     }
 }
