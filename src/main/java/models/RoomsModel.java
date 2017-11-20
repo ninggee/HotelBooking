@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "rooms")
-public class RoomModel extends Model {
+public class RoomsModel extends Model {
     @DatabaseField(generatedId = true)
     private int id ;
 
@@ -23,7 +23,7 @@ public class RoomModel extends Model {
     @DatabaseField(columnName = "is_ordered")
     private boolean is_ordered;
 
-    public RoomModel() {
+    public RoomsModel() {
     }
 
     public RoomModel(int room_number, String room_type, int price, String description, boolean is_ordered) {
