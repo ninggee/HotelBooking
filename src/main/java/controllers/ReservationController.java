@@ -28,7 +28,11 @@ public class ReservationController {
         }
     }
 
-    public static String addReservation(Request request, Response response) {
+    public static String deleteReservation(Request request, Response response) {
+        return null;
+    }
+
+    public static String insertReservation(Request request, Response response) {
         int roomId;
         int userId;
         Date startDate = null;
@@ -41,22 +45,14 @@ public class ReservationController {
 
             ReservationModel reservationModel = new ReservationModel(roomId, userId, startDate, endDate);
             reservationDao.create(reservationModel);
-            return gson.toJson(true);
+            return "true";
         } catch (ParseException e) {
             e.printStackTrace();
-            return gson.toJson(false);
+            return "false";
         } catch (SQLException e) {
             e.printStackTrace();
-            return gson.toJson(false);
+            return "false";
         }
-    }
-
-    public static String deleteReservation(Request request, Response response) {
-        return null;
-    }
-
-    public static String insertReservation(Request request, Response response) {
-        return null;
     }
 
     public static String updateReservation(Request request, Response response) {

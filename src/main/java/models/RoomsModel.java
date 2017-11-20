@@ -26,7 +26,7 @@ public class RoomsModel extends Model {
     public RoomsModel() {
     }
 
-    public RoomModel(int room_number, String room_type, int price, String description, boolean is_ordered) {
+    public RoomsModel(int room_number, String room_type, int price, String description, boolean is_ordered) {
         this.room_number = room_number;
         this.room_type = room_type;
         this.price = price;
