@@ -23,19 +23,6 @@ public class Main {
         Dao<UserModel,String> userDao = DaoManager.createDao(Model.connectionSource, UserModel.class);
 
 
-//       get("/users", (request, response) -> {
-//            String username = request.queryParams("username");
-//            String email = request.queryParams("email");
-//
-//            UserModel user = new UserModel();
-//            user.setName(username);
-//            user.setPassword(email);
-//
-//            userDao.create(user);
-//
-//            response.status(201); // 201 Created
-//        });
-
         get("/", (request, response) -> {
             // Show something
 
