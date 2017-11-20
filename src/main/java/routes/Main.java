@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
+import controllers.UserController;
 import models.Model;
 import models.UserModel;
 import spark.Request;
@@ -23,24 +24,8 @@ public class Main {
         Dao<UserModel,String> userDao = DaoManager.createDao(Model.connectionSource, UserModel.class);
 
 
-        get("/", (request, response) -> {
-            // Show something
+        get("/", UserController::addUser);
 
-            String username = request.queryParams("username");
-            String email = request.queryParams("email");
 
-            UserModel user = new UserModel();
-            user.setName(username);
-            user.setPassword(email);
-            user.setIs_admin(true);
-
-            userDao.create(user);
-
-            response.status(201); // 201 Created
-
-            return true;
-        });
-
-//        System.out.println("hello world");
     }
 }
