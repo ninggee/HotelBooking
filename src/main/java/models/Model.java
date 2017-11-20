@@ -10,8 +10,8 @@ public class Model {
     static {
         try {
             connectionSource = new JdbcConnectionSource(databaseUrl);
-            ((JdbcConnectionSource)connectionSource).setUsername("root");
-            ((JdbcConnectionSource)connectionSource).setPassword("tjuscswz");
+            ((JdbcConnectionSource)connectionSource).setUsername("hotel");
+            ((JdbcConnectionSource)connectionSource).setPassword("hoteluser");
         } catch (Exception e) {
 
         }
