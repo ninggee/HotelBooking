@@ -5,6 +5,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import controllers.ReservationController;
+import controllers.RoomsController;
 import controllers.UserController;
 import models.Model;
 import models.UserModel;
@@ -41,5 +42,9 @@ public class Main {
             get("/:id", ReservationController::queryReservation);
         });
 
+        path("/room", () -> {
+            get("/", RoomsController::queryAll);
+//            get("/:id", ReservationController::queryReservation);
+        });
     }
 }
