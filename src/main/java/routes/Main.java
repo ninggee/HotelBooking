@@ -8,6 +8,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import controllers.ReservationController;
 import controllers.RoomsController;
 import controllers.UserController;
+import controllers.VisitorController;
 import models.Model;
 import models.UserModel;
 import spark.Request;
@@ -65,6 +66,14 @@ public class Main {
             post("/add", RoomsController::addRoom);
             delete("/delete/:id", RoomsController::deleteById);
             put("/update/:id", RoomsController::updateById);
+        });
+
+        path("/visitor", () -> {
+            get("", VisitorController::queryVisitors);
+            get("/:id", VisitorController::queryVisitor);
+            delete("/delete/:id", VisitorController::deleteVisitor);
+            post("/insert", VisitorController::addVisitor);
+            put("/update", VisitorController::updateVisitor);
         });
 
         // Using Route

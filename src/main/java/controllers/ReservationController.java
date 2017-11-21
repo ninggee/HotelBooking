@@ -11,17 +11,16 @@ import spark.Response;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
 public class ReservationController {
     private static Dao<ReservationModel, String> reservationDao;
     private static DateFormat dateFormat;
-    private static Gson gson;
 
     static {
         dateFormat = Utils.getDateFormat();
-        gson = new Gson();
         try {
             reservationDao =  DaoManager.createDao(Model.connectionSource, ReservationModel.class);
         } catch (SQLException e) {
@@ -42,11 +41,17 @@ public class ReservationController {
             endDate = dateFormat.parse(request.queryParams("end_date"));
 
             ReservationModel reservationModel = new ReservationModel(roomId, userId, startDate, endDate);
-            reservationDao.create(reservationModel);
-            return Utils.response(true, null, null);
-        } catch (Exception e) {
+            int result = reservationDao.create(reservationModel);
+            return Utils.response(true, null, result);
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-            return Utils.response(false, e.getMessage(), null);
+            return Utils.response(false, "Failed to parse room_id and visitor_id to int.", null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Utils.response(false, "Failed to add from database.", null);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return Utils.response(false, "Failed to parse start_date and end_date to Date.", null);
         }
     }
 
@@ -57,10 +62,12 @@ public class ReservationController {
             reservationModel.setId(id);
             int result = reservationDao.delete(reservationModel);
             return Utils.response(true, null, result);
-        }
-        catch (Exception e) {
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-            return Utils.response(false, e.getMessage(), null);
+            return Utils.response(false, "Failed to parse id to int.", null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Utils.response(false, "Failed to delete from database.", null);
         }
     }
 
@@ -80,10 +87,15 @@ public class ReservationController {
             ReservationModel reservationModel = new ReservationModel(id, roomId, userId, startDate, endDate);
             int result = reservationDao.update(reservationModel);
             return Utils.response(true, null, result);
-        }
-        catch (Exception e) {
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-            return Utils.response(false, e.getMessage(), null);
+            return Utils.response(false, "Failed to parse id, room_id and visitor_id to int.", null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Utils.response(false, "Failed to update from database.", null);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return Utils.response(false, "Failed to parse start_date and end_date to Date.", null);
         }
     }
 
@@ -93,7 +105,7 @@ public class ReservationController {
             return Utils.response(true, null, reservationModelList);
         } catch (SQLException e) {
             e.printStackTrace();
-            return Utils.response(false, e.getMessage(), null);
+            return Utils.response(false, "Failed to query from database.", null);
         }
     }
 
@@ -107,10 +119,12 @@ public class ReservationController {
             else {
                 return Utils.response(true, null, reservationModel);
             }
-        }
-        catch (Exception e) {
+        } catch (NumberFormatException e) {
             e.printStackTrace();
-            return Utils.response(false, e.getMessage(), null);
+            return Utils.response(false, "Failed to parse id to int.", null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Utils.response(false, "Failed to query from database.", null);
         }
     }
 }
