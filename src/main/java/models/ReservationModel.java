@@ -25,7 +25,17 @@ public class ReservationModel extends Model{
     public ReservationModel() {
     }
 
+    //创建新的reservation的时候不需要指定id
     public ReservationModel(int room_id, int user_id, Date start_date, Date end_date) {
+        this.room_id = room_id;
+        this.user_id = user_id;
+        this.start_date = start_date;
+        this.end_date = end_date;
+    }
+
+    //更新reservation的时候需要指定id
+    public ReservationModel(int id, int room_id, int user_id, Date start_date, Date end_date) {
+        this.id = id;
         this.room_id = room_id;
         this.user_id = user_id;
         this.start_date = start_date;
