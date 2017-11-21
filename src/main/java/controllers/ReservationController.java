@@ -4,6 +4,7 @@ import Utils.Utils;
 import com.google.gson.Gson;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.stmt.QueryBuilder;
 import models.Model;
 import models.ReservationModel;
 import spark.Request;
@@ -121,11 +122,24 @@ public class ReservationController {
         }
 
         try {
-            List<ReservationModel> reservationModelList = reservationDao.queryForAll();
+            String offset = request.queryParams("offset");
+            String limit = request.queryParams("limit");
+            List<ReservationModel> reservationModelList;
+
+            if (offset != null && limit != null) {
+                reservationModelList = reservationDao.queryBuilder()
+                        .offset(Long.parseLong(offset)).limit(Long.parseLong(limit)).query();
+            }
+            else {
+                reservationModelList = reservationDao.queryForAll();
+            }
             return Utils.response(true, null, reservationModelList);
         } catch (SQLException e) {
             e.printStackTrace();
             return Utils.response(false, "Failed to query from database.", null);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return Utils.response(false, "Failed to parse offset and limit to long.", null);
         }
     }
 

@@ -90,11 +90,24 @@ public class VisitorController {
         }
 
         try {
-            List<VisitorModel> visitorModelList = visitorDao.queryForAll();
+            String offset = request.queryParams("offset");
+            String limit = request.queryParams("limit");
+            List<VisitorModel> visitorModelList;
+
+            if (offset != null && limit != null) {
+                visitorModelList = visitorDao.queryBuilder()
+                        .offset(Long.parseLong(offset)).limit(Long.parseLong(limit)).query();
+            }
+            else {
+                visitorModelList = visitorDao.queryForAll();
+            }
             return Utils.response(true, null, visitorModelList);
         } catch (SQLException e) {
             e.printStackTrace();
             return Utils.response(false, "Failed to query from database.", null);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return Utils.response(false, "Failed to parse offset and limit to long.", null);
         }
     }
 
