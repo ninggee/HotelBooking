@@ -29,6 +29,11 @@ public class ReservationController {
     }
 
     public static String addReservation(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         int roomId;
         int userId;
         Date startDate = null;
@@ -56,6 +61,11 @@ public class ReservationController {
     }
 
     public static String deleteReservation(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         try {
             int id = Integer.parseInt(request.params(":id"));
             ReservationModel reservationModel = new ReservationModel();
@@ -72,6 +82,11 @@ public class ReservationController {
     }
 
     public static String updateReservation(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         int id;
         int roomId;
         int userId;
@@ -100,6 +115,11 @@ public class ReservationController {
     }
 
     public static String queryReservations(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         try {
             List<ReservationModel> reservationModelList = reservationDao.queryForAll();
             return Utils.response(true, null, reservationModelList);
@@ -110,6 +130,11 @@ public class ReservationController {
     }
 
     public static String queryReservation(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         try {
             int id = Integer.parseInt(request.params(":id"));
             ReservationModel reservationModel = reservationDao.queryForId(String.valueOf(id));

@@ -23,6 +23,11 @@ public class VisitorController {
     }
 
     public static String addVisitor(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         try {
             String gender = request.queryParams("gender");
             String identityCard = request.queryParams("identity_card");
@@ -36,6 +41,11 @@ public class VisitorController {
     }
 
     public static String deleteVisitor(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         try {
             int id = Integer.parseInt(request.params(":id"));
             VisitorModel visitorModel = new VisitorModel();
@@ -52,6 +62,11 @@ public class VisitorController {
     }
 
     public static String updateVisitor(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         try {
             int id = Integer.parseInt(request.queryParams("id"));
             String gender = request.queryParams("gender");
@@ -69,6 +84,11 @@ public class VisitorController {
     }
 
     public static String queryVisitors(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         try {
             List<VisitorModel> visitorModelList = visitorDao.queryForAll();
             return Utils.response(true, null, visitorModelList);
@@ -79,6 +99,11 @@ public class VisitorController {
     }
 
     public static String queryVisitor(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, "Authentication failed: need to login.", null);
+        }
+
         try {
             int id = Integer.parseInt(request.params(":id"));
             VisitorModel visitorModel = visitorDao.queryForId(String.valueOf(id));
