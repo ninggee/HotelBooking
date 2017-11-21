@@ -1,22 +1,15 @@
 package routes;
 
-import Utils.Utils;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import com.j256.ormlite.support.ConnectionSource;
 import controllers.ReservationController;
-import controllers.RoomsController;
+import controllers.RoomController;
 import controllers.UserController;
 import controllers.VisitorController;
 import models.Model;
 import models.UserModel;
-import spark.Request;
-import spark.Response;
-import spark.Route;
 
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import static spark.Spark.*;
@@ -61,11 +54,11 @@ public class Main {
         });
 
         path("/room", () -> {
-            get("/", RoomsController::queryAll);
-            get("/:id", RoomsController::queryById);
-            post("/add", RoomsController::addRoom);
-            delete("/delete/:id", RoomsController::deleteById);
-            put("/update/:id", RoomsController::updateById);
+            get("", RoomController::queryAll);
+            get("/:id", RoomController::queryById);
+            post("/insert", RoomController::addRoom);
+            delete("/delete/:id", RoomController::deleteById);
+            put("/update", RoomController::updateById);
         });
 
         path("/visitor", () -> {

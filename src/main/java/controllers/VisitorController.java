@@ -3,6 +3,7 @@ package controllers;
 import Utils.Utils;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import enumerations.ResponseMessage;
 import models.Model;
 import models.VisitorModel;
 import spark.Request;
@@ -25,7 +26,7 @@ public class VisitorController {
     public static String addVisitor(Request request, Response response) {
         int auth = Utils.checkAuth(request);
         if (auth == 0) {
-            return Utils.response(false, "Authentication failed: need to login.", null);
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
         }
 
         try {
@@ -36,14 +37,14 @@ public class VisitorController {
             return Utils.response(true, null, result);
         } catch (SQLException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to add from database.", null);
+            return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
         }
     }
 
     public static String deleteVisitor(Request request, Response response) {
         int auth = Utils.checkAuth(request);
         if (auth == 0) {
-            return Utils.response(false, "Authentication failed: need to login.", null);
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
         }
 
         try {
@@ -54,17 +55,17 @@ public class VisitorController {
             return Utils.response(true, null, result);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to parse id to int.", null);
+            return Utils.response(false, ResponseMessage.INT_PARSE_FAILED.getDetail("id"), null);
         } catch (SQLException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to delete from database.", null);
+            return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
         }
     }
 
     public static String updateVisitor(Request request, Response response) {
         int auth = Utils.checkAuth(request);
         if (auth == 0) {
-            return Utils.response(false, "Authentication failed: need to login.", null);
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
         }
 
         try {
@@ -76,17 +77,17 @@ public class VisitorController {
             return Utils.response(true, null, result);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to parse id to int.", null);
+            return Utils.response(false, ResponseMessage.INT_PARSE_FAILED.getDetail("id"), null);
         } catch (SQLException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to update from database.", null);
+            return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
         }
     }
 
     public static String queryVisitors(Request request, Response response) {
         int auth = Utils.checkAuth(request);
         if (auth == 0) {
-            return Utils.response(false, "Authentication failed: need to login.", null);
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
         }
 
         try {
@@ -104,17 +105,17 @@ public class VisitorController {
             return Utils.response(true, null, visitorModelList);
         } catch (SQLException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to query from database.", null);
+            return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to parse offset and limit to long.", null);
+            return Utils.response(false, ResponseMessage.LONG_PARSE_FAILED.getDetail("offset", "limit"), null);
         }
     }
 
     public static String queryVisitor(Request request, Response response) {
         int auth = Utils.checkAuth(request);
         if (auth == 0) {
-            return Utils.response(false, "Authentication failed: need to login.", null);
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
         }
 
         try {
@@ -123,10 +124,10 @@ public class VisitorController {
             return Utils.response(true, null, visitorModel);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to parse id to int.", null);
+            return Utils.response(false, ResponseMessage.INT_PARSE_FAILED.getDetail("id"), null);
         } catch (SQLException e) {
             e.printStackTrace();
-            return Utils.response(false, "Failed to query from database.", null);
+            return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
         }
     }
 }
