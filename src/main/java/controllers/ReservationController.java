@@ -37,7 +37,7 @@ public class ReservationController {
 
         try {
             roomId = Integer.parseInt(request.queryParams("room_id"));
-            userId = Integer.parseInt(request.queryParams("user_id"));
+            userId = Integer.parseInt(request.queryParams("visitor_id"));
             startDate = dateFormat.parse(request.queryParams("start_date"));
             endDate = dateFormat.parse(request.queryParams("end_date"));
 
@@ -55,8 +55,8 @@ public class ReservationController {
             int id = Integer.parseInt(request.params(":id"));
             ReservationModel reservationModel = new ReservationModel();
             reservationModel.setId(id);
-            reservationDao.delete(reservationModel);
-            return Utils.response(true, null, null);
+            int result = reservationDao.delete(reservationModel);
+            return Utils.response(true, null, result);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -74,16 +74,16 @@ public class ReservationController {
         try {
             id = Integer.parseInt(request.queryParams("id"));
             roomId = Integer.parseInt(request.queryParams("room_id"));
-            userId = Integer.parseInt(request.queryParams("user_id"));
+            userId = Integer.parseInt(request.queryParams("visitor_id"));
             startDate = dateFormat.parse(request.queryParams("start_date"));
             endDate = dateFormat.parse(request.queryParams("end_date"));
             ReservationModel reservationModel = new ReservationModel(id, roomId, userId, startDate, endDate);
-            reservationDao.update(reservationModel);
-            return Utils.response(true, null, null);
+            int result = reservationDao.update(reservationModel);
+            return Utils.response(true, null, result);
         }
         catch (Exception e) {
             e.printStackTrace();
-            return Utils.response(true, e.getMessage(), null);
+            return Utils.response(false, e.getMessage(), null);
         }
     }
 

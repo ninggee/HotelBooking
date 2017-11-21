@@ -13,8 +13,8 @@ public class ReservationModel extends Model{
     @DatabaseField(columnName = "room_id")
     private int room_id;
 
-    @DatabaseField(columnName = "user_id")
-    private int user_id;
+    @DatabaseField(columnName = "visitor_id")
+    private int visitor_id;
 
     @DatabaseField(columnName = "start_date")
     private Date start_date;
@@ -26,18 +26,18 @@ public class ReservationModel extends Model{
     }
 
     //创建新的reservation的时候不需要指定id
-    public ReservationModel(int room_id, int user_id, Date start_date, Date end_date) {
+    public ReservationModel(int room_id, int visitor_id, Date start_date, Date end_date) {
         this.room_id = room_id;
-        this.user_id = user_id;
+        this.visitor_id = visitor_id;
         this.start_date = start_date;
         this.end_date = end_date;
     }
 
     //更新reservation的时候需要指定id
-    public ReservationModel(int id, int room_id, int user_id, Date start_date, Date end_date) {
+    public ReservationModel(int id, int room_id, int visitor_id, Date start_date, Date end_date) {
         this.id = id;
         this.room_id = room_id;
-        this.user_id = user_id;
+        this.visitor_id = visitor_id;
         this.start_date = start_date;
         this.end_date = end_date;
     }
@@ -58,12 +58,12 @@ public class ReservationModel extends Model{
         this.room_id = room_id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getVisitor_id() {
+        return visitor_id;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setVisitor_id(int user_id) {
+        this.visitor_id = user_id;
     }
 
     public Date getStart_date() {
