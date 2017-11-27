@@ -2,10 +2,8 @@ package routes;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import controllers.ReservationController;
-import controllers.RoomController;
-import controllers.UserController;
-import controllers.VisitorController;
+import controllers.*;
+import models.HeroModel;
 import models.Model;
 import models.UserModel;
 
@@ -20,14 +18,8 @@ public class Main {
 
         Dao<UserModel,String> userDao = DaoManager.createDao(Model.connectionSource, UserModel.class);
 
-
         //home page
-        get("/", (req, res) -> {
-            res.status(200);
-            res.body("welcome to hotel booking backend");
-
-           return res.body();
-        });
+        before("*", (req, res) -> res.header("Access-Control-Allow-Origin", "*"));
 
         path("/user", () -> {
             //add a normal user
@@ -67,6 +59,11 @@ public class Main {
             delete("/delete/:id", VisitorController::deleteVisitor);
             post("/insert", VisitorController::addVisitor);
             put("/update", VisitorController::updateVisitor);
+        });
+
+        //test path
+        path("/heroes", () -> {
+            get("", HeroController::getHeroes);
         });
 
         // Using Route
