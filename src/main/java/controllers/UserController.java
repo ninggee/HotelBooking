@@ -1,6 +1,9 @@
 package controllers;
 
 import Utils.Utils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.sun.org.apache.regexp.internal.RE;
@@ -56,6 +59,16 @@ public class UserController {
         String username = request.queryParams("username");
         String password = request.queryParams("password");
 
+        if (username == null && password == null) {
+            Object querys = UserController.parseRequest(request);
+
+            JsonObject jsonObject = (JsonObject)querys;
+
+
+            username = String.valueOf(jsonObject.get("username").getAsString());
+
+            password = String.valueOf(jsonObject.get("password").getAsString());
+        }
 
         Map<String, Object > params = new HashMap<>();
         params.put("name", username);
@@ -63,7 +76,6 @@ public class UserController {
         try {
 
             List<UserModel> userModels = userDao.queryForFieldValues(params);
-
             if(userModels.size()  == 1) {
                 UserModel userModel = userModels.get(0);
                 boolean result = Utils.checkPassword(password, userModel.getPassword());
@@ -171,6 +183,20 @@ public class UserController {
             response.removeCookie("user_id");
             return Utils.response(true, "注销成功", null);
         }
+
+    }
+
+    private static  Object parseRequest(Request request) {
+        JsonParser parser = new JsonParser();
+
+        String body = request.body();
+
+        if (body.length() > 0) {
+            return parser.parse(body);
+        } else {
+            return "";
+        }
+
 
     }
 
