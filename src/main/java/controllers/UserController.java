@@ -78,8 +78,10 @@ public class UserController {
                 } else {
                     return Utils.response(result, "登录失败,用户名或密码错误", null);
                 }
+            } else if(userModels.size() == 0){
+                return Utils.response( false, "登录失败,用户名或密码错误", null);
             } else {
-                return Utils.response( false, "用户名重复，请联系管理员", null);
+                return Utils.response(false, "登录失败，请联系管理员", null);
             }
 
 
