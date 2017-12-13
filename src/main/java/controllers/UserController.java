@@ -85,8 +85,10 @@ public class UserController {
 
 
                     response.cookie("user_id", userModel.getId() + "", 3306);
+                    params.put("uid", userModel.getId());
+                    params.put("isAdmin", userModel.isIs_admin());
 
-                    return Utils.response(result, "登录成功", null);
+                    return Utils.response(result, "登录成功", params);
                 } else {
                     return Utils.response(result, "登录失败,用户名或密码错误", null);
                 }
