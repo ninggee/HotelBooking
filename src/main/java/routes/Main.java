@@ -49,6 +49,7 @@ public class Main {
         Main.enableCORS("*", "GET,PUT,POST,DELETE,OPTIONS", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,");
 
         path("/user", () -> {
+            get("", UserController::getAllUser);
             //add a normal user
             post("/normal", UserController::addUser);
 
@@ -67,9 +68,9 @@ public class Main {
         path("/reservation", () -> {
             get("", ReservationController::queryReservations);
             get("/:id", ReservationController::queryReservation);
-            delete("/delete/:id", ReservationController::deleteReservation);
+            delete("/:id", ReservationController::deleteReservation);
             post("/insert", ReservationController::addReservation);
-            put("/update", ReservationController::updateReservation);
+            put("/:id", ReservationController::updateReservation);
         });
 
         path("/room", () -> {

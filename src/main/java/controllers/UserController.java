@@ -7,7 +7,9 @@ import com.google.gson.JsonParser;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.sun.org.apache.regexp.internal.RE;
+import enumerations.ResponseMessage;
 import models.Model;
+import models.ReservationModel;
 import models.UserModel;
 import org.slf4j.Logger;
 import org.slf4j.impl.SimpleLogger;
@@ -186,6 +188,34 @@ public class UserController {
             return Utils.response(true, "注销成功", null);
         }
 
+    }
+
+    public static String getAllUser(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
+        }
+
+        try {
+            String offset = request.queryParams("offset");
+            String limit = request.queryParams("limit");
+            List<UserModel> reservationModelList;
+
+            if (offset != null && limit != null) {
+                reservationModelList = userDao.queryBuilder()
+                        .offset(Long.parseLong(offset)).limit(Long.parseLong(limit)).query();
+            }
+            else {
+                reservationModelList = userDao.queryForAll();
+            }
+            return Utils.response(true, null, reservationModelList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return Utils.response(false, ResponseMessage.LONG_PARSE_FAILED.getDetail("offset", "limit"), null);
+        }
     }
 
     private static  Object parseRequest(Request request) {

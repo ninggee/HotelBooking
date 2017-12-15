@@ -2,6 +2,7 @@ package controllers;
 
 import Utils.Utils;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.stmt.QueryBuilder;
@@ -96,14 +97,15 @@ public class ReservationController {
         Date endDate = null;
 
         try {
-            id = Integer.parseInt(request.queryParams("id"));
-            roomId = Integer.parseInt(request.queryParams("room_id"));
-            userId = Integer.parseInt(request.queryParams("visitor_id"));
-            startDate = dateFormat.parse(request.queryParams("start_date"));
-            endDate = dateFormat.parse(request.queryParams("end_date"));
+            id = Integer.parseInt(request.params("id"));
+            JsonObject object = (JsonObject)Utils.parseRequest(request);
+            roomId = object.get("room_id").getAsInt();
+            userId = object.get("visitor_id").getAsInt();
+            startDate = dateFormat.parse(object.get("start_date").getAsString());
+            endDate = dateFormat.parse(object.get("end_date").getAsString());
             ReservationModel reservationModel = new ReservationModel(id, roomId, userId, startDate, endDate);
             int result = reservationDao.update(reservationModel);
-            return Utils.response(true, null, result);
+            return Utils.response(true, null, reservationModel);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return Utils.response(false, ResponseMessage.INT_PARSE_FAILED.getDetail("id", "room_id", "visitor_id"), null);
