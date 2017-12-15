@@ -1,6 +1,7 @@
 package controllers;
 
 import Utils.Utils;
+import com.google.gson.JsonObject;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import enumerations.ResponseMessage;
@@ -81,14 +82,19 @@ public class RoomController {
         }
 
         try {
-            int roomNumber = Integer.parseInt(request.queryParams("room_number"));
-            String roomType = request.queryParams("room_type");
-            int price = Integer.parseInt(request.queryParams("price"));
-            String description = request.queryParams("description");
-            boolean isOrdered = Boolean.parseBoolean(request.queryParams("is_ordered"));
+            int roomNumber, price;
+            String roomType, description;
+            boolean isOrdered;
+
+            JsonObject object = (JsonObject)Utils.parseRequest(request);
+            roomNumber = object.get("room_number").getAsInt();
+            price = object.get("price").getAsInt();
+            description = object.get("description").getAsString();
+            isOrdered = false;
+            roomType = object.get("room_type").getAsString();
             RoomModel roomModel = new RoomModel(roomNumber, roomType, price, description, isOrdered);
             int result = roomDao.create(roomModel);
-            return Utils.response(true, null, result);
+            return Utils.response(true, null, roomModel);
         } catch (SQLException e) {
             e.printStackTrace();
             return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
@@ -126,12 +132,21 @@ public class RoomController {
         }
 
         try {
-            int id = Integer.parseInt(request.queryParams("id"));
-            int roomNumber = Integer.parseInt(request.queryParams("room_number"));
-            String roomType = request.queryParams("room_type");
-            int price = Integer.parseInt(request.queryParams("price"));
-            String description = request.queryParams("description");
-            boolean isOrdered = Boolean.parseBoolean(request.queryParams("is_ordered"));
+            int id = Integer.parseInt(request.params("id"));
+//            request.params();
+            int roomNumber, price;
+            String roomType, description;
+            boolean isOrdered;
+
+            JsonObject object = (JsonObject)Utils.parseRequest(request);
+            id = object.get("id").getAsInt();
+            roomNumber = object.get("room_number").getAsInt();
+            price = object.get("price").getAsInt();
+            description = object.get("description").getAsString();
+            isOrdered = object.get("is_ordered").getAsBoolean();
+            roomType = object.get("room_type").getAsString();
+
+
             RoomModel roomModel = new RoomModel(id, roomNumber, roomType, price, description, isOrdered);
             int result = roomDao.update(roomModel);
             return Utils.response(true, null, result);

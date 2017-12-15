@@ -2,6 +2,7 @@ package Utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
 import models.UserModel;
 import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
@@ -75,5 +76,20 @@ public class Utils {
         } else {
             return  null; //user is not login
         }
+    }
+
+    // change json body to JsonObject
+    public static  Object parseRequest(Request request) {
+        JsonParser parser = new JsonParser();
+
+        String body = request.body();
+
+        if (body.length() > 0) {
+            return parser.parse(body);
+        } else {
+            return "";
+        }
+
+
     }
 }

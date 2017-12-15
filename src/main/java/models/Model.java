@@ -7,7 +7,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 
 public class Model {
-    private static String databaseUrl = "jdbc:mysql://121.193.130.195:3306/HotelBooking";
+    private static String databaseUrl = "jdbc:mysql://121.193.130.195:3306/HotelBooking?useUnicode=true&characterEncoding=UTF-8";
     public static ConnectionSource connectionSource;
     static {
         try {
@@ -15,6 +15,8 @@ public class Model {
             ((JdbcConnectionSource)connectionSource).setUsername("hotel");
             ((JdbcConnectionSource)connectionSource).setPassword("hoteluser");
         } catch (Exception e) {
+            e.printStackTrace();
+
 
         }
     }
