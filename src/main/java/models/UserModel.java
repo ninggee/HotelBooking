@@ -21,6 +21,16 @@ public class UserModel  extends Model{
     @DatabaseField(columnName = PASSWORD_FIELD_NAME)
     private String password;
 
+    @DatabaseField(columnName = "add_time")
+    private String add_time;
+
+    @DatabaseField(columnName = "is_admin")
+    private boolean is_admin;
+
+    public UserModel() {
+        // all persisted classes must define a no-arg constructor with at least package visibility
+    }
+
     public void setIs_admin(boolean is_admin) {
         this.is_admin = is_admin;
     }
@@ -30,12 +40,6 @@ public class UserModel  extends Model{
         return is_admin;
     }
 
-    @DatabaseField(columnName = "is_admin")
-    private boolean is_admin;
-
-    public UserModel() {
-        // all persisted classes must define a no-arg constructor with at least package visibility
-    }
 
     public UserModel(String name, String password, boolean is_admin) {
         this.name = name;
@@ -50,6 +54,14 @@ public class UserModel  extends Model{
     public UserModel(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public String getAdd_time() {
+        return add_time;
+    }
+
+    public void setAdd_time(String add_time) {
+        this.add_time = add_time;
     }
 
     public int getId() {
