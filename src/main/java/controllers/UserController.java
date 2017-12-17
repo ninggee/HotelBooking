@@ -2,6 +2,7 @@ package controllers;
 
 import Utils.Utils;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.j256.ormlite.dao.Dao;
@@ -34,8 +35,10 @@ public class UserController {
 
     //create normal user
     public static String addUser(Request request, Response response) {
-        String username = request.queryParams("username");
-        String password = request.queryParams("password");
+        JsonObject input = (JsonObject)Utils.parseRequest(request);
+
+        String username = input.get("name").getAsString();
+        String password = input.get("password").getAsString();
 
         if(UserController.isNameUsed(username)) {
             return Utils.response(false, "用户名已被使用", null);
@@ -124,8 +127,10 @@ public class UserController {
 
     //create admin user
     public static String addAdmin(Request request, Response response) {
-        String username = request.queryParams("username");
-        String password = request.queryParams("password");
+        JsonObject input = (JsonObject)Utils.parseRequest(request);
+
+        String username = input.get("name").getAsString();
+        String password = input.get("password").getAsString();
 
         if(UserController.isNameUsed(username)) {
             return Utils.response(false, "用户名已被使用", null);
@@ -229,7 +234,82 @@ public class UserController {
             return "";
         }
 
+    }
 
+    public static String getUserById(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
+        }
+
+        try {
+
+            int id = Integer.parseInt(request.params("id"));
+            UserModel user = userDao.queryForId(id + "");
+            return Utils.response(true, "查詢成功", user);
+        } catch (Exception e) {
+            return Utils.response(false, "查詢失敗", null);
+        }
+
+
+    }
+
+    public static String updateUserById(Request request, Response response) {
+        try {
+            int id = Integer.parseInt(request.params("id"));
+
+            JsonObject input = (JsonObject)Utils.parseRequest(request);
+
+            String username = input.get("name").getAsString();
+            JsonElement passwordElement = input.get("password");
+            String password = "";
+
+            if(passwordElement != null) {
+                password = passwordElement.getAsString();
+            }
+
+
+            boolean is_admin = input.get("is_admin").getAsBoolean();
+
+            UserModel user = userDao.queryForId(id + "");
+
+
+            if(!user.getName().equals(username) && UserController.isNameUsed(username)) {
+                return Utils.response(false, "新用户名已经被占用", null);
+            }
+
+            user.setName(username);
+            user.setIs_admin(is_admin);
+
+            if(!password.equals("")) {
+                user.setPassword(Utils.calPassword(password));
+            }
+
+            userDao.update(user);
+
+            return Utils.response(true,"", user);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return Utils.response(false, "", null);
+        }
+    }
+
+
+    public static String deleteById(Request request, Response respone) {
+        try {
+            int id = Integer.parseInt(request.params("id"));
+
+            int result = userDao.deleteById(id + "");
+
+            if(result == 1) {
+                return Utils.response(true, "删除成功", null);
+            } else {
+                return Utils.response(false, "删除失败请重试", null);
+            }
+        } catch (Exception e) {
+            return Utils.response(false, "删除失败请重试", null);
+        }
     }
 
 }

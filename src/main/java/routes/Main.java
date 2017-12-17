@@ -50,15 +50,17 @@ public class Main {
 
         path("/user", () -> {
             get("", UserController::getAllUser);
+
+            get("/:id", UserController::getUserById);
+            post("/:id", UserController::updateUserById);
             //add a normal user
-            post("/normal", UserController::addUser);
-
+            post("/add/normal", UserController::addUser);
             //add an admin user
-            post("/admin", UserController::addAdmin);
-
+            post("/add/admin", UserController::addAdmin);
             post("/login", UserController::login);
-
             post("/logout", UserController::logout);
+
+            delete("/:id", UserController::deleteById);
 
             //修改用户名和密码
             post("/password", UserController::changePassword);
@@ -84,7 +86,7 @@ public class Main {
         path("/visitor", () -> {
             get("", VisitorController::queryVisitors);
             get("/:id", VisitorController::queryVisitor);
-            delete("/delete/:id", VisitorController::deleteVisitor);
+            delete("/:id", VisitorController::deleteVisitor);
             post("/insert", VisitorController::addVisitor);
             put("/update", VisitorController::updateVisitor);
         });

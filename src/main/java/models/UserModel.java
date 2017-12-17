@@ -19,7 +19,7 @@ public class UserModel  extends Model{
     private String name;
 
     @DatabaseField(columnName = PASSWORD_FIELD_NAME)
-    private String password;
+    private transient String password;
 
     @DatabaseField(columnName = "add_time")
     private String add_time;
