@@ -77,6 +77,7 @@ public class Main {
 
         path("/room", () -> {
             get("", RoomController::queryAll);
+            get("/order",RoomController::queryNotOrder);
             get("/:id", RoomController::queryById);
             post("/insert", RoomController::addRoom);
             delete("/:id", RoomController::deleteById);

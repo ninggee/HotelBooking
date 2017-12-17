@@ -73,6 +73,39 @@ public class RoomController {
         }
     }
 
+    public static String queryNotOrder(Request request, Response response) {
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
+        }
+
+        try {
+            String offset = request.queryParams("offset");
+            String limit = request.queryParams("limit");
+            List<RoomModel> roomModelList;
+
+            if (offset != null && limit != null) {
+                roomModelList = roomDao.queryBuilder()
+                        .offset(Long.parseLong(offset)).limit(Long.parseLong(limit)).query();
+            }
+            else {
+                roomModelList = roomDao.queryForAll();
+            }
+            for(int i = 0;i < roomModelList.size(); i++){
+                if(roomModelList.get(i).isIs_ordered())
+                    roomModelList.remove(i);
+            }
+            System.out.print(roomModelList);
+            return Utils.response(true, null, roomModelList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return Utils.response(false, ResponseMessage.LONG_PARSE_FAILED.getDetail("offset", "limit"), null);
+        }
+    }
+
     public static String addRoom(Request request, Response response) {
         //插入字符有乱码
 
