@@ -90,7 +90,7 @@ public class Main {
 
         path("/visitor", () -> {
             get("", VisitorController::queryVisitors);
-            get("/number", VisitorController::queryVisitorsNumber);//访客个数
+            get("/statistics/number", VisitorController::queryVisitorsNumber);//访客个数
             get("/:id", VisitorController::queryVisitor);
             get("/identity_card/:identity_card", VisitorController::queryVisitorByIdentity_card);
             delete("/:id", VisitorController::deleteVisitor);
@@ -101,6 +101,10 @@ public class Main {
         //test path
         path("/heroes", () -> {
             get("", HeroController::getHeroes);
+        });
+
+        path("/statistics", () -> {
+           get("week_data", StatisticsController::weekData);
         });
 
         // Using Route

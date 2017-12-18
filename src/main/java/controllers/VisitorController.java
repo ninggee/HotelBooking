@@ -146,17 +146,11 @@ public class VisitorController {
         }
 
         try {
-            String offset = request.queryParams("offset");
-            String limit = request.queryParams("limit");
             List<VisitorModel> visitorModelList;
 
-            if (offset != null && limit != null) {
-                visitorModelList = visitorDao.queryBuilder()
-                        .offset(Long.parseLong(offset)).limit(Long.parseLong(limit)).query();
-            }
-            else {
-                visitorModelList = visitorDao.queryForAll();
-            }
+
+            visitorModelList = visitorDao.queryForAll();
+
             int resInt = visitorModelList.size();
             return Utils.response(true, null, resInt);
         } catch (SQLException e) {

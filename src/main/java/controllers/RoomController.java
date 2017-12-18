@@ -11,7 +11,9 @@ import spark.Request;
 import spark.Response;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RoomController {
     private static Dao<RoomModel, String> roomDao;
@@ -192,31 +194,29 @@ public class RoomController {
         }
     }
 
-    public static Object queryNotOrderNumber(Request request, Response response) {
+    public static String queryNotOrderNumber(Request request, Response response) {
         int auth = Utils.checkAuth(request);
         if (auth == 0) {
             return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
         }
 
         try {
-            String offset = request.queryParams("offset");
-            String limit = request.queryParams("limit");
             List<RoomModel> roomModelList;
+            roomModelList = roomDao.queryForAll();
 
-            if (offset != null && limit != null) {
-                roomModelList = roomDao.queryBuilder()
-                        .offset(Long.parseLong(offset)).limit(Long.parseLong(limit)).query();
-            }
-            else {
-                roomModelList = roomDao.queryForAll();
-            }
+            int total = roomModelList.size();
+
 
             for(int i = roomModelList.size() - 1;i >= 0; i--){
                 if(roomModelList.get(i).isIs_ordered())
                     roomModelList.remove(i);
             }
             int resultInt = roomModelList.size();
-            return Utils.response(true, null, resultInt);
+            Map result = new HashMap();
+            result.put("total", total);
+            result.put("remain", resultInt);
+
+            return Utils.response(true, null, result);
         } catch (SQLException e) {
             e.printStackTrace();
             return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);

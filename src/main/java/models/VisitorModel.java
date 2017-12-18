@@ -15,6 +15,8 @@ public class VisitorModel extends Model {
     @DatabaseField(columnName = "identity_card")
     private String identity_card;
 
+    @DatabaseField(columnName = "add_time")
+    private String addTime;
     public VisitorModel() {
     }
 
@@ -51,5 +53,21 @@ public class VisitorModel extends Model {
 
     public void setIdentityCard(String identity_card) {
         this.identity_card = identity_card;
+    }
+
+    public String getIdentity_card() {
+        return identity_card;
+    }
+
+    public void setIdentity_card(String identity_card) {
+        this.identity_card = identity_card;
+    }
+
+    public String getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 }
