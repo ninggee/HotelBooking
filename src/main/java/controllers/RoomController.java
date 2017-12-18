@@ -91,11 +91,12 @@ public class RoomController {
             else {
                 roomModelList = roomDao.queryForAll();
             }
-            for(int i = 0;i < roomModelList.size(); i++){
+
+            for(int i = roomModelList.size() - 1;i >= 0; i--){
                 if(roomModelList.get(i).isIs_ordered())
                     roomModelList.remove(i);
             }
-            System.out.print(roomModelList);
+//            System.out.print(roomModelList);
             return Utils.response(true, null, roomModelList);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -178,7 +179,6 @@ public class RoomController {
             description = object.get("description").getAsString();
             isOrdered = object.get("is_ordered").getAsBoolean();
             roomType = object.get("room_type").getAsString();
-
 
             RoomModel roomModel = new RoomModel(id, roomNumber, roomType, price, description, isOrdered);
             int result = roomDao.update(roomModel);
