@@ -43,10 +43,14 @@ public class ReservationController {
         Date endDate = null;
 
         try {
-            roomId = Integer.parseInt(request.queryParams("room_id"));
-            visitorId = Integer.parseInt(request.queryParams("visitor_id"));
-            startDate = dateFormat.parse(request.queryParams("start_date"));
-            endDate = dateFormat.parse(request.queryParams("end_date"));
+            JsonObject input = (JsonObject)Utils.parseRequest(request);
+
+            roomId = input.get("room_id").getAsInt();
+            visitorId = input.get("visitor_id").getAsInt();
+            startDate = dateFormat.parse(input.get("start_date").getAsString());
+            endDate = dateFormat.parse(input.get("end_date").getAsString());
+//            System.out.print("asdasd" + startDate);
+
 
             ReservationModel reservationModel = new ReservationModel(roomId, visitorId, startDate, endDate);
             int result = reservationDao.create(reservationModel);

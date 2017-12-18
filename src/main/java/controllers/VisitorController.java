@@ -36,10 +36,10 @@ public class VisitorController {
             String gender = input.get("gender").getAsString();
             String identityCard = input.get("identity_card").getAsString();
             VisitorModel visitorModel = new VisitorModel(gender, identityCard);
-            System.out.println("1233333333333" + gender);
-            System.out.println("1233333333333" + identityCard);
+//            System.out.println("1233333333333" + gender);
+//            System.out.println("1233333333333" + identityCard);
             int result = visitorDao.create(visitorModel);
-            return Utils.response(true, null, result);
+            return Utils.response(true, null, visitorModel);
         } catch (SQLException e) {
             e.printStackTrace();
             return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
