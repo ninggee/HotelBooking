@@ -34,7 +34,7 @@ public class VisitorController {
             JsonObject input = (JsonObject)Utils.parseRequest(request);
 
             String gender = input.get("gender").getAsString();
-            String identityCard = input.get("identity_card");
+            String identityCard = input.get("identity_card").getAsString();
             VisitorModel visitorModel = new VisitorModel(gender, identityCard);
             System.out.println("1233333333333" + gender);
             System.out.println("1233333333333" + identityCard);
