@@ -1,6 +1,7 @@
 package controllers;
 
 import Utils.Utils;
+import com.google.gson.JsonObject;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import enumerations.ResponseMessage;
@@ -30,8 +31,10 @@ public class VisitorController {
         }
 
         try {
-            String gender = request.queryParams("gender");
-            String identityCard = request.queryParams("identity_card");
+            JsonObject input = (JsonObject)Utils.parseRequest(request);
+
+            String gender = input.get("gender").getAsString();
+            String identityCard = input.get("identity_card");
             VisitorModel visitorModel = new VisitorModel(gender, identityCard);
             System.out.println("1233333333333" + gender);
             System.out.println("1233333333333" + identityCard);
