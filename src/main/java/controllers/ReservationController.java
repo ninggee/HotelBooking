@@ -168,4 +168,34 @@ public class ReservationController {
             return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
         }
     }
+
+    public static Object queryReservationsNumber(Request request, Response response) {
+
+        int auth = Utils.checkAuth(request);
+        if (auth == 0) {
+            return Utils.response(false, ResponseMessage.AUTH_LESS_THAN_1.getDetail(), null);
+        }
+
+        try {
+            String offset = request.queryParams("offset");
+            String limit = request.queryParams("limit");
+            List<ReservationModel> reservationModelList;
+
+            if (offset != null && limit != null) {
+                reservationModelList = reservationDao.queryBuilder()
+                        .offset(Long.parseLong(offset)).limit(Long.parseLong(limit)).query();
+            }
+            else {
+                reservationModelList = reservationDao.queryForAll();
+            }
+            int resInt = reservationModelList.size();
+            return Utils.response(true, null, resInt);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Utils.response(false, ResponseMessage.DATABASE_ERROR.getDetail(), null);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return Utils.response(false, ResponseMessage.LONG_PARSE_FAILED.getDetail("offset", "limit"), null);
+        }
+    }
 }

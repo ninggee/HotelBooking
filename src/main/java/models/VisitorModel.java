@@ -13,20 +13,20 @@ public class VisitorModel extends Model {
     private String gender;
 
     @DatabaseField(columnName = "identity_card")
-    private String identityCard;
+    private String identity_card;
 
     public VisitorModel() {
     }
 
     public VisitorModel(String gender, String identityCard) {
         this.gender = gender;
-        this.identityCard = identityCard;
+        this.identity_card = identityCard;
     }
 
     public VisitorModel(int id, String gender, String identityCard) {
         this.id = id;
         this.gender = gender;
-        this.identityCard = identityCard;
+        this.identity_card = identityCard;
     }
 
     public int getId() {
@@ -46,10 +46,10 @@ public class VisitorModel extends Model {
     }
 
     public String getIdentityCard() {
-        return identityCard;
+        return identity_card;
     }
 
-    public void setIdentityCard(String identityCard) {
-        this.identityCard = identityCard;
+    public void setIdentityCard(String identity_card) {
+        this.identity_card = identity_card;
     }
 }

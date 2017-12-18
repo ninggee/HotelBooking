@@ -50,6 +50,7 @@ public class Main {
 
         path("/user", () -> {
             get("", UserController::getAllUser);
+            get("/number", UserController::getAllUserNumber);//user个数
 
             get("/:id", UserController::getUserById);
             post("/:id", UserController::updateUserById);
@@ -69,6 +70,7 @@ public class Main {
 
         path("/reservation", () -> {
             get("", ReservationController::queryReservations);
+            get("/number", ReservationController::queryReservationsNumber);//订单个数
             get("/:id", ReservationController::queryReservation);
             delete("/:id", ReservationController::deleteReservation);
             post("/insert", ReservationController::addReservation);
@@ -77,7 +79,9 @@ public class Main {
 
         path("/room", () -> {
             get("", RoomController::queryAll);
-            get("/order",RoomController::queryNotOrder);
+            get("/number", RoomController::queryAllNumber);//所有房间个数
+            get("/order",RoomController::queryNotOrder);//没有订的房间
+            get("/order/number",RoomController::queryNotOrderNumber);//没有订房间的数量
             get("/:id", RoomController::queryById);
             post("/insert", RoomController::addRoom);
             delete("/:id", RoomController::deleteById);
@@ -86,7 +90,9 @@ public class Main {
 
         path("/visitor", () -> {
             get("", VisitorController::queryVisitors);
+            get("/number", VisitorController::queryVisitorsNumber);//访客个数
             get("/:id", VisitorController::queryVisitor);
+            get("/identity_card/:identity_card", VisitorController::queryVisitorByIdentity_card);
             delete("/:id", VisitorController::deleteVisitor);
             post("/insert", VisitorController::addVisitor);
             put("/update", VisitorController::updateVisitor);
