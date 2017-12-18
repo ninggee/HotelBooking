@@ -104,7 +104,7 @@ public class Main {
         });
 
         path("/statistics", () -> {
-           get("week_data", StatisticsController::weekData);
+           get("/week_data", StatisticsController::weekData);
         });
 
         // Using Route

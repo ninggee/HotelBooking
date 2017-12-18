@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 public class ReservationController {
-    private static Dao<ReservationModel, String> reservationDao;
+    public static Dao<ReservationModel, String> reservationDao;
     private static DateFormat dateFormat;
 
     static {
