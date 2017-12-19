@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RoomController {
-    private static Dao<RoomModel, String> roomDao;
+    public static Dao<RoomModel, String> roomDao;
 
     static {
         try {

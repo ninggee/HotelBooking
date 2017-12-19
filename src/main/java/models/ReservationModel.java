@@ -22,6 +22,9 @@ public class ReservationModel extends Model{
     @DatabaseField(columnName = "end_date")
     private Date end_date;
 
+    @DatabaseField(columnName = "add_time")
+    private String addTime;
+
     public ReservationModel() {
     }
 
@@ -80,5 +83,12 @@ public class ReservationModel extends Model{
 
     public void setEnd_date(Date end_date) {
         this.end_date = end_date;
+    }
+    public String getAddTime() {
+        return addTime;
+    }
+
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 }

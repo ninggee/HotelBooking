@@ -30,8 +30,15 @@ public class StatisticsController {
                 finalResult[week]++;
 
             }
+            Map map = new HashMap();
+            map.put("week", weeks);
+            map.put("data", finalResult);
 
-            return Utils.response(true, "", finalResult);
+            List<RoomModel> roomModels = RoomController.roomDao.queryForAll();
+
+            map.put("total", roomModels.size());
+
+            return Utils.response(true, "", map);
 
         } catch (SQLException e) {
             e.printStackTrace();
