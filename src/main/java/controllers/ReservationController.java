@@ -53,6 +53,7 @@ public class ReservationController {
 
 
             ReservationModel reservationModel = new ReservationModel(roomId, visitorId, startDate, endDate);
+            reservationModel.setAddTime(dateFormat.format(new Date()));
             int result = reservationDao.create(reservationModel);
             return Utils.response(true, null, result);
         } catch (NumberFormatException e) {
