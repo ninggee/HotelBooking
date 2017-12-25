@@ -53,7 +53,7 @@ public class Main {
             get("/number", UserController::getAllUserNumber);//user个数
 
             get("/:id", UserController::getUserById);
-            post("/:id", UserController::updateUserById);
+            post("/update/:id", UserController::updateUserById);
             //add a normal user
             post("/add/normal", UserController::addUser);
             //add an admin user

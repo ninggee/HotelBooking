@@ -74,6 +74,7 @@ public class UserController {
 
             password = String.valueOf(jsonObject.get("password").getAsString());
         }
+        System.out.println(username);
 
         Map<String, Object > params = new HashMap<>();
         params.put("name", username);
